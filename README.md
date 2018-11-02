@@ -1,15 +1,12 @@
-### Date created
-Include the date you created this project and README file.
+### Project Started On 11/01/18
 
-### Project Title
-Replace the Project Title
 
-### Description
-Describe what your project is about and what it does
+### Github Project On Bikeshare project
 
-### Files used
-Include the files used
 
-### Credits
-It's important to give proper credit. Add links to any repo that inspired you or blogposts you consulted.
+### Project includes a python project that allows a user to pull data on city transportation depending on user input.
 
+
+### Files Included: README.md, Bikeshare.py, CSV data files for 3 cities.
+
+### Credit to @rbUdacProjects for the forked repository.
