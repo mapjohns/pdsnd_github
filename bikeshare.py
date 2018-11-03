@@ -1,6 +1,5 @@
 import time
 import pandas as pd
-import numpy as np
 
 CITY_DATA= { 'chicago': 'chicago.csv',
                'new york city': 'new_york_city.csv',
@@ -10,26 +9,26 @@ CITY_DATA= { 'chicago': 'chicago.csv',
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
- 
+
     Returns:
         (str) city - name of the city to analyze
         (str) month - name of the month to filter by, or "all" to apply no month filter
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
     """
     print('Hello! Let\'s explore some US bikeshare data!')
-    
+
    #Gets user input for city (chicago, new york city, washington) and uses a 'while' loop to handle invalid inputs.
     city = input("Would you like to see data for Chicago, New York City, or Washington?:").title()
     while city not in ('Chicago', 'New York City', 'Washington'):
         print("Please enter a valid answer")
         city = input("Would you like to see data for Chicago, New York City, or Washington?:").title()
-        
+
     #Gets user input for month (all, january, february, ... , june) and uses a 'while' loop to handle invalid inputs.
     month = input("Which month would you like to see data for? Or type 'all' to see data for all months:").title()
     while month not in ('January', 'February','March','April','May','June','July','All'):
         print("Answer not valid, please try again")
         month = input("Which month would you like to see data for? Or type 'all' to see data for all months:").title()
-        
+
 
     #Gets user input for day of week (all, monday, tuesday, ... sunday) and uses a 'while' loop to handle invalid inputs.
     day = input("Which day would you like to see data for? Or type 'all' for every day of the week:").title()
@@ -43,7 +42,7 @@ def get_filters():
 def load_data(city, month, day):
     """
     Loads data for the specified city and filters by month and day if applicable.
-    
+
     Args:
         (str) city - name of the city to analyze
         (str) month - name of the month to filter by, or "all" to apply no month filter
@@ -53,7 +52,7 @@ def load_data(city, month, day):
     """
     month = month.lower()
     day = day.lower()
-    
+
     #Loads CSV based on the city, result returned in df.
     df = pd.read_csv(CITY_DATA[city.lower()])
 
@@ -63,7 +62,7 @@ def load_data(city, month, day):
     df['month'] = df['Start Time'].dt.month
     df['day_of_week'] = df['Start Time'].dt.weekday_name
     df['start_hour'] = df['Start Time'].dt.hour
-    
+
     #Filters by month.
     if month != 'all':
         months = ['january', 'february', 'march', 'april', 'may', 'june']
@@ -71,7 +70,7 @@ def load_data(city, month, day):
 
         #Filters by month to create the new dataframe.
         df = df[df['month'] == month]
-        
+
     #Filters by day of week if applicable.
     if day != 'all':
         #Filters by day of week to create the new dataframe.
@@ -84,11 +83,11 @@ def time_stats(df):
     print('\nCalculating The Most Frequent Times of Travel...\n')
     #Starts tracking the time to process the function.
     start_time = time.time()
-    
+
     #Display the most common month.
     popular_month = df['month'].mode()[0]
     print('The most common month is {}'.format(popular_month))
-    
+
     #Displays the most common day of week.
     common_dow = df['day_of_week'].mode()[0]
     print('The most common day of the week is {}'.format(common_dow))
@@ -112,16 +111,16 @@ def station_stats(df):
     #Most frequently used start station.
     most_start_station = df['Start Station'].mode()[0]
     print('The most commonly used start station is: {}'.format(most_start_station))
-    
+
     #Most frequently used end station.
     most_end_station = df['End Station'].mode()[0]
     print('The most commonly used end stations is: {}'.format(most_end_station))
-    
+
     #Most frequently used combination of start and end station.
     df['Start and End Station'] = '\nTo start at' + ' ' + df['Start Station'] + ' ' + '\nAnd end at'+ ' ' + df['End Station']
     combined_station = df['Start and End Station'].mode()[0]
     print('The most popular travel combination is: {}'.format(combined_station))
-    
+
     #Prints out the time the function took to be processed.
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
@@ -151,7 +150,7 @@ def user_stats(df):
 
     print('\nCalculating User Stats...\n')
     start_time = time.time()
-    
+
     #Takes a count of and groups the user types together.
     user_count = df['User Type'].value_counts()
     print('Total counts for user types are:\n{}'.format(user_count))
@@ -163,7 +162,7 @@ def user_stats(df):
             print('\nTotal gender counts are:\n{}'.format(gender_count))
     except KeyError:
         pass
-    
+
     #Catches if birth year is not present in the CSV file.
     try:
 
@@ -197,14 +196,14 @@ def raw_data(df):
             if more_rows in('yes'):
                 print(df.iloc[i:v,:])
                 i+=5
-                v+=5            
+                v+=5
             else:
                 if more_rows in ('no'):
                     break
                 else:
                     print('Please enter a valid input')
 
-                  
+
 def main():
     #This calls all the declared functions.
     while True:
@@ -216,7 +215,7 @@ def main():
         trip_duration_stats(df)
         user_stats(df)
         raw_data(df)
-        
+
         #Prompts the user if they want to run this again.
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
